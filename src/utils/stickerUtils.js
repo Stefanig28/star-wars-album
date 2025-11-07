@@ -11,7 +11,7 @@ export const getRandomResourceId = (resourceKey) => {
 };
 
 export const generateRandomStickersConfig = () => {
-  const isConfig1 = Math.random() < 0.5; 
+  const isConfig1 = Math.random() < 0.5;
   const stickerKeys = [];
 
   if (isConfig1) {
@@ -23,8 +23,8 @@ export const generateRandomStickersConfig = () => {
     for (let i = 0; i < 2; i++) stickerKeys.push('starships');
   }
 
-  return stickerKeys.map(key => ({
-    resourceKey: key, 
+  return stickerKeys.map((key) => ({
+    resourceKey: key,
     id: getRandomResourceId(key),
   }));
 };

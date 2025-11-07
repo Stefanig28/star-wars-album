@@ -1,5 +1,10 @@
 import { AppRouter } from './router/AppRouter';
+import { AlbumProvider } from './context/AlbumContext';
 
 export const App = () => {
-  return <AppRouter />;
+  return (
+    <AlbumProvider>
+      <AppRouter />
+    </AlbumProvider>
+  );
 };
