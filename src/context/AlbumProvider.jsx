@@ -1,8 +1,8 @@
-import React, { useReducer } from 'react';
+import { useReducer } from 'react';
 import { AlbumContext } from './albumContext';
 import { albumReducer } from './albumReducer';
 import { fetchResourceById } from '../api/swapi';
-import { getRandomResourceId } from '../api/utils/stickerUtils';
+import { getRandomResourceId } from '../utils/stickerUtils';
 
 const COOLDOWN_DURATION = 60;
 const MAX_ENVELOPES = 4;
