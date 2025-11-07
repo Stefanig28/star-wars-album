@@ -4,19 +4,26 @@ import { getStickerCategory } from '../utils/stickerUtils';
 const BASE_URL = 'https://swapi.dev/api';
 
 export const ResourceMap = {
-  movies: { type: 'films', total: 6, specialCount: 6, name: 'Películas' },
+  movies: { type: 'films', total: 6, specialCount: 6, name: 'Movies' },
   characters: {
     type: 'people',
     total: 82,
     specialCount: 20,
-    name: 'Personajes',
+    name: 'Characters',
   },
-  starships: { type: 'starships', total: 36, specialCount: 10, name: 'Naves' },
+  starships: {
+    type: 'starships',
+    total: 36,
+    specialCount: 10,
+    name: 'Starships',
+  },
 };
 
 /**
- * @param {string} resourceKey - 'movies', 'characters', 'starships'
- * @param {number} id - El ID del recurso a buscar
+ * Fetch a resource by its type and ID.
+ *
+ * @param {string} resourceKey - 'movies', 'characters', or 'starships'
+ * @param {number} id - The ID of the resource to fetch
  */
 export const fetchResourceById = async (resourceKey, id) => {
   const resourceType = ResourceMap[resourceKey]?.type;
@@ -33,17 +40,17 @@ export const fetchResourceById = async (resourceKey, id) => {
     };
   } catch (error) {
     console.warn(
-      `[SWAPI Error] No se pudo obtener ${resourceKey} ID ${id}.`,
+      `[SWAPI Error] Failed to fetch ${resourceKey} with ID ${id}.`,
       error.message
     );
 
     return {
       error: true,
-      message: `¡Lámina no encontrada! (ID ${id})`,
+      message: `Sticker not found! (ID ${id})`,
       id,
       resourceKey,
       category: getStickerCategory(resourceKey, id),
-      name: 'Lámina Desconocida',
+      name: 'Unknown Sticker',
     };
   }
 };

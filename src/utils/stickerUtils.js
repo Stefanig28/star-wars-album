@@ -2,7 +2,7 @@ import { ResourceMap } from '../api/swapi';
 
 export const getStickerCategory = (resourceKey, id) => {
   const { specialCount } = ResourceMap[resourceKey];
-  return id <= specialCount ? 'Especial' : 'Regular';
+  return id <= specialCount ? 'Special' : 'Regular';
 };
 
 export const getRandomResourceId = (resourceKey) => {
