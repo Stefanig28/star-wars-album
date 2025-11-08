@@ -23,6 +23,7 @@ const initialState = {
   envelopes: initialEnvelopes,
   cooldown: 0,
   isCooldownActive: false,
+  lastOpenedStickers: null,
 };
 
 export const AlbumProvider = ({ children }) => {
@@ -37,8 +38,7 @@ export const AlbumProvider = ({ children }) => {
       fetchResourceById(resourceKey, id)
     );
 
-    const results = await Promise.all(apiPromises);
-    const stickers = results.filter((res) => !res.error);
+    const stickers = await Promise.all(apiPromises);
 
     dispatch({
       type: 'ADD_STICKER',

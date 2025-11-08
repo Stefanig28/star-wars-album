@@ -44,6 +44,12 @@ export const albumReducer = (state, action) => {
         isCooldownActive: false,
       };
 
+    case 'CLOSE_MODAL':
+      return {
+        ...state,
+        lastOpenedStickers: null,
+      };
+
     default:
       return state;
   }

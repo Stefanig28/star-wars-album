@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { AlbumContext } from '../context/albumContext';
-
+import OpenedStickersView from '../components/OpenedStickersView.jsx';
 import CooldownTimer from '../components/CooldownTimer';
 
 export const GetStickersPage = () => {
@@ -93,6 +93,8 @@ export const GetStickersPage = () => {
           isCooldownActive={isCooldownActive}
         />
       </div>
+
+      <OpenedStickersView />
     </div>
   );
 };
