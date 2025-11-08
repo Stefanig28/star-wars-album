@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { GetStickersPage } from '../pages/GetStickersPage';
 import { MyAlbumPage } from '../pages/MyAlbumPage';
 import { NavBar } from '../components/NavBar';
-import HomePage from '../pages/HomePage'; 
+import HomePage from '../pages/HomePage';
 
 export const AppRouter = () => {
   return (

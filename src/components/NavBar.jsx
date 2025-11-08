@@ -9,11 +9,11 @@ export const NavBar = () => {
   ];
 
   return (
-    <nav className="bg-black/90 border-b border-yellow-500/30 sticky top-0 z-50">
+    <nav className="bg-[#a58222]   backdrop-blur-md border-b-2 border-yellow-500 sticky top-0 shadow-lg shadow-yellow-600/30">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         <Link
           to="/"
-          className="text-yellow-400 font-bold text-lg tracking-wider hover:text-yellow-300 transition"
+          className="text-[#FFEA20] font-extrabold text-2xl tracking-widest hover:text-[#9DF1DF] transition-colors duration-300"
         >
           STAR WARS ALBUM
         </Link>
@@ -23,11 +23,11 @@ export const NavBar = () => {
             <li key={link.to}>
               <Link
                 to={link.to}
-                className={`${
+                className={`pb-1 font-semibold tracking-wide transition-all duration-200 ${
                   location.pathname === link.to
-                    ? 'text-yellow-400 border-b-2 border-yellow-400'
-                    : 'text-gray-300 hover:text-yellow-300'
-                } pb-1 transition font-medium`}
+                    ? 'text-[#FFEA20] border-b-2 border-[#FFEA20]'
+                    : 'text-white hover:text-[#FFCC00] hover:border-b-2 hover:border-[#FFCC00]'
+                }`}
               >
                 {link.label}
               </Link>

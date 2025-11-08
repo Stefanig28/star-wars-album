@@ -1,16 +1,12 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState } from 'react';
 import { AlbumContext } from '../context/albumContext';
 
 const OpenedStickersView = () => {
   const { state, dispatch } = useContext(AlbumContext);
   const { lastOpenedStickers } = state;
 
-  useEffect(() => {
-    setDisabledButtons(lastOpenedStickers.map(() => false));
-  }, [lastOpenedStickers]);
-
   const [disabledButtons, setDisabledButtons] = useState(
-    lastOpenedStickers.map(() => false)
+    lastOpenedStickers ? lastOpenedStickers.map(() => false) : []
   );
 
   if (!lastOpenedStickers || lastOpenedStickers.length === 0) return null;
@@ -41,9 +37,7 @@ const OpenedStickersView = () => {
   };
 
   const handleClose = () => {
-    if (allDisabled) {
-      dispatch({ type: 'CLOSE_MODAL' });
-    }
+    dispatch({ type: 'CLOSE_MODAL' });
   };
 
   return (
@@ -131,7 +125,6 @@ const OpenedStickersView = () => {
         </div>
 
         <button
-          disabled={!allDisabled}
           className={`bg-yellow-400 text-gray-900 font-bold py-2 px-6 rounded-lg hover:bg-yellow-300 transition-colors shadow-md
             ${!allDisabled ? 'opacity-50 cursor-not-allowed' : ''}
           `}
