@@ -2,7 +2,7 @@ import { useReducer } from 'react';
 import { AlbumContext } from './albumContext';
 import { albumReducer } from './albumReducer';
 import { fetchResourceById } from '../api/swapi';
-import { getRandomResourceId } from '../utils/stickerUtils';
+import { generateRandomStickersConfig } from '../utils/stickerUtils'; 
 
 const COOLDOWN_DURATION = 60;
 const MAX_ENVELOPES = 4;
@@ -14,6 +14,12 @@ const initialEnvelopes = Array.from({ length: MAX_ENVELOPES }, (_, i) => ({
 }));
 
 const initialState = {
+  album: { 
+    movies: {}, 
+    characters: {}, 
+    starships: {},
+    lastOpenedStickers: null, 
+  },
   envelopes: initialEnvelopes,
   cooldown: 0,
   isCooldownActive: false,
@@ -23,12 +29,16 @@ export const AlbumProvider = ({ children }) => {
   const [state, dispatch] = useReducer(albumReducer, initialState);
 
   const openEnvelope = async (envelopeId) => {
-    const stickers = await Promise.all(
-      Array.from({ length: 3 }, async () => {
-        const randomId = getRandomResourceId('people');
-        return await fetchResourceById('people', randomId);
-      })
+    if (state.isCooldownActive) return;
+
+    const stickerConfigs = generateRandomStickersConfig();
+    
+    const apiPromises = stickerConfigs.map(({ resourceKey, id }) => 
+        fetchResourceById(resourceKey, id)
     );
+    
+    const results = await Promise.all(apiPromises);
+    const stickers = results.filter(res => !res.error); 
 
     dispatch({
       type: 'ADD_STICKER',
@@ -43,7 +53,7 @@ export const AlbumProvider = ({ children }) => {
   };
 
   return (
-    <AlbumContext.Provider value={{ state, openEnvelope }}>
+    <AlbumContext.Provider value={{ state, openEnvelope, dispatch }}>
       {children}
     </AlbumContext.Provider>
   );
