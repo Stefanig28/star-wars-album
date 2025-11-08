@@ -1,9 +1,17 @@
-import React, { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { AlbumContext } from '../context/albumContext';
 
 const OpenedStickersView = () => {
   const { state, dispatch } = useContext(AlbumContext);
   const { lastOpenedStickers } = state;
+
+  useEffect(() => {
+    setDisabledButtons(lastOpenedStickers.map(() => false));
+  }, [lastOpenedStickers]);
+
+  const [disabledButtons, setDisabledButtons] = useState(
+    lastOpenedStickers.map(() => false)
+  );
 
   if (!lastOpenedStickers || lastOpenedStickers.length === 0) return null;
 
@@ -13,10 +21,6 @@ const OpenedStickersView = () => {
     if (!resourceKey || !stickerId || sticker.error) return false;
     return !!state.album[resourceKey]?.[stickerId];
   };
-
-  const [disabledButtons, setDisabledButtons] = useState(
-    lastOpenedStickers.map(() => false)
-  );
 
   const allDisabled = disabledButtons.every((d) => d);
 
@@ -41,10 +45,6 @@ const OpenedStickersView = () => {
       dispatch({ type: 'CLOSE_MODAL' });
     }
   };
-
-  useEffect(() => {
-    setDisabledButtons(lastOpenedStickers.map(() => false));
-  }, [lastOpenedStickers]);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50 p-4">
