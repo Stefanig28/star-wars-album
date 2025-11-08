@@ -4,16 +4,18 @@ import OpenedStickersView from '../components/OpenedStickersView.jsx';
 import CooldownTimer from '../components/CooldownTimer';
 
 export const GetStickersPage = () => {
-  const { state, openEnvelope } = useContext(AlbumContext);
+  const { state, openEnvelope, dispatch } = useContext(AlbumContext);
   const { envelopes, isCooldownActive, cooldown } = state;
   const [isLoading, setIsLoading] = useState(false);
+
   const handleOpenEnvelope = async (envelopeId) => {
     if (isLoading || isCooldownActive) return;
 
     setIsLoading(true);
-
     try {
       await openEnvelope(envelopeId);
+
+      dispatch({ type: 'SET_COOLDOWN', payload: Date.now() + 60000 });
     } catch (error) {
       console.error('Error al abrir el sobre:', error);
     } finally {
@@ -88,10 +90,7 @@ export const GetStickersPage = () => {
           Acceso Restringido - Próximo Escaneo:
         </span>
 
-        <CooldownTimer
-          currentCooldown={cooldown}
-          isCooldownActive={isCooldownActive}
-        />
+        <CooldownTimer cooldownEnd={cooldown} />
       </div>
 
       <OpenedStickersView />
