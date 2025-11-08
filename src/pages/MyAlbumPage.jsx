@@ -1,6 +1,8 @@
+import React, { useContext } from 'react';
+import { AlbumContext } from '../context/albumContext';
 import { useAlbumChecker } from '../hooks/useAlbumChecker';
 import { ResourceMap } from '../api/swapi';
-
+import StickerDetailsModal from '../components/StickerDetailsModal';
 const sectionMap = {
   Películas: 'movies',
   Personajes: 'characters',
@@ -8,10 +10,16 @@ const sectionMap = {
 };
 
 export const MyAlbumPage = () => {
+  const { dispatch } = useContext(AlbumContext);
   const { checkIsOwned, getAlbumProgress, getStickerDetails } =
     useAlbumChecker();
-
   const progress = getAlbumProgress();
+
+  const handleStickerClick = (stickerData) => {
+    if (stickerData) {
+      dispatch({ type: 'SELECT_STICKER', payload: stickerData });
+    }
+  };
 
   return (
     <div className="min-h-screen w-full bg-gray-950 text-white py-16 px-6 flex flex-col overflow-hidden">
@@ -46,7 +54,6 @@ export const MyAlbumPage = () => {
                 {totalAlbumSlots.map((stickerId) => {
                   const isOwned = checkIsOwned(resourceKey, stickerId);
                   const stickerData = getStickerDetails(resourceKey, stickerId);
-
                   const isSpecial = stickerData?.category === 'Special';
 
                   const cardClasses = isOwned
@@ -61,6 +68,11 @@ export const MyAlbumPage = () => {
                     <div
                       key={`${resourceKey}-${stickerId}`}
                       className={`flex flex-col items-center justify-center h-24 sm:h-28 w-full rounded-lg p-1 ${cardClasses} ${specialClasses}`}
+                      onClick={
+                        isOwned
+                          ? () => handleStickerClick(stickerData)
+                          : undefined
+                      }
                     >
                       <span
                         className={`font-mono text-sm ${isOwned ? 'text-yellow-400 font-bold' : 'text-gray-400'}`}
@@ -85,6 +97,8 @@ export const MyAlbumPage = () => {
           );
         })}
       </div>
+
+      <StickerDetailsModal />
     </div>
   );
 };

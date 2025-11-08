@@ -19,6 +19,7 @@ const initialState = {
     characters: {},
     starships: {},
     lastOpenedStickers: null,
+    selectedSticker: null,
   },
   envelopes: initialEnvelopes,
   cooldown: 0,

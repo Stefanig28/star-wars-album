@@ -50,6 +50,18 @@ export const albumReducer = (state, action) => {
         lastOpenedStickers: null,
       };
 
+    case 'SELECT_STICKER':
+      return {
+        ...state,
+        selectedSticker: action.payload,
+      };
+
+    case 'DESELECT_STICKER':
+      return {
+        ...state,
+        selectedSticker: null,
+      };
+
     default:
       return state;
   }
