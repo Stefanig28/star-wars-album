@@ -30,6 +30,38 @@ export const albumReducer = (state, action) => {
       };
     }
 
+    case 'ADD_TO_ALBUM_MANUAL': {
+      const sticker = action.payload;
+      const resourceKey = sticker.resourceKey || 'characters';
+
+      return {
+        ...state,
+        album: {
+          ...state.album,
+          [resourceKey]: {
+            ...state.album[resourceKey],
+            [sticker.id]: sticker,
+          },
+        },
+      };
+    }
+
+    case 'DISCARD_FROM_ALBUM': {
+      const sticker = action.payload;
+      const resourceKey = sticker.resourceKey || 'characters';
+
+      const newResource = { ...state.album[resourceKey] };
+      delete newResource[sticker.id];
+
+      return {
+        ...state,
+        album: {
+          ...state.album,
+          [resourceKey]: newResource,
+        },
+      };
+    }
+
     case 'SET_COOLDOWN':
       return {
         ...state,
